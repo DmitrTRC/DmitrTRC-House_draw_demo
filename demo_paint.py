@@ -22,15 +22,29 @@ def draw_image(window):
     house_width = window.get_width() // 3
     house_height = house_width * 4 / 3
 
-    draw_background()
-    draw_house()
+    draw_background(window)
+    draw_house(window)
 
 
-def draw_background():
+def draw_background(window):
     pass
 
 
-def draw_house():
+def draw_house(window):
+    draw_foundation(window)
+    draw_walls(window)
+    draw_roof(window)
+
+
+def draw_foundation(window):
+    pass
+
+
+def draw_walls(window):
+    pass
+
+
+def draw_roof(window):
     pass
 
 
