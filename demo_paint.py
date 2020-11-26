@@ -18,7 +18,7 @@ def main():
 
 def draw_image(window):
     house_x = window.get_width() // 2
-    house_y = window.get_height() // 2 * 3
+    house_y = window.get_height() // 5 * 3
     house_width = window.get_width() // 3
     house_height = house_width * 4 / 3
 
@@ -27,7 +27,11 @@ def draw_image(window):
 
 
 def draw_background(window):
-    pass
+    earth_color = 'darkgreen'
+    sky_color = 'deepskyblue3'
+    pygame.draw.rect(window, earth_color, ((0, window.get_height() // 2),
+                                           (window.get_width() - 1, window.get_height() - 1)))
+    pygame.draw.rect(window, sky_color, ((0, 0), (window.get_width() - 1, window.get_height() // 2)))
 
 
 def draw_house(window):
