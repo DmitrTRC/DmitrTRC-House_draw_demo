@@ -44,7 +44,7 @@ def draw_image(window):
     house_x = window_width // HALF
     house_y = window_height // FIFTH * THIRD
     house_width = window_width // THIRD
-    house_height = house_width * FOURTH / THIRD
+    house_height = house_width * FOURTH // THIRD
 
     draw_background(window)
     draw_house(window, house_x, house_y, house_width, house_height)
