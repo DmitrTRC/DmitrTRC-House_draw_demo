@@ -1,11 +1,32 @@
 import pygame
 
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+FPS = 60
+
+HALF = 2
+THIRD = 3
+FOURTH = 4
+FIFTH = 5
+SEVENTH_EIGHTHS_NUMERATOR = 7
+EIGHTH = 8
+
+WINDOW_BORDER_WIDTH = 10
+WINDOW_LINE_WIDTH = 3
+
+EARTH_COLOR = 'darkgreen'
+SKY_COLOR = 'deepskyblue3'
+FOUNDATION_COLOR = 'peru'
+WALLS_COLOR = 'peachpuff'
+HOUSE_WINDOW_COLOR = 'cornflowerblue'
+WINDOW_BORDER_COLOR = 'khaki4'
+ROOF_COLOR = 'sienna4'
+
 
 def main():
-    screen_width = 800
-    screen_height = 800
     pygame.init()
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock()
     running = True
     while running:
         for event in pygame.event.get():
@@ -13,31 +34,34 @@ def main():
                 running = False
         draw_image(screen)
         pygame.display.flip()
+        clock.tick(FPS)
     pygame.quit()
 
 
 def draw_image(window):
-    house_x = window.get_width() // 2
-    house_y = window.get_height() // 5 * 3
-    house_width = window.get_width() // 3
-    house_height = house_width * 4 / 3
+    window_width = window.get_width()
+    window_height = window.get_height()
+    house_x = window_width // HALF
+    house_y = window_height // FIFTH * THIRD
+    house_width = window_width // THIRD
+    house_height = house_width * FOURTH / THIRD
 
     draw_background(window)
     draw_house(window, house_x, house_y, house_width, house_height)
 
 
 def draw_background(window):
-    earth_color = 'darkgreen'
-    sky_color = 'deepskyblue3'
-    pygame.draw.rect(window, earth_color, ((0, window.get_height() // 2),
-                                           (window.get_width() - 1, window.get_height() - 1)))
-    pygame.draw.rect(window, sky_color, ((0, 0), (window.get_width() - 1, window.get_height() // 2)))
+    window_width = window.get_width()
+    window_height = window.get_height()
+    pygame.draw.rect(window, EARTH_COLOR, (0, window_height // HALF,
+                                           window_width, window_height // HALF))
+    pygame.draw.rect(window, SKY_COLOR, (0, 0, window_width, window_height // HALF))
 
 
 def draw_house(window, x, y, width, height):
-    foundation_height = height // 8
-    walls_height = height // 2
-    walls_width = 7 * width // 8
+    foundation_height = height // EIGHTH
+    walls_height = height // HALF
+    walls_width = SEVENTH_EIGHTHS_NUMERATOR * width // EIGHTH
     roof_height = height - walls_height - foundation_height
 
     draw_foundation(window, x, y, width, foundation_height)
@@ -46,29 +70,27 @@ def draw_house(window, x, y, width, height):
 
 
 def draw_foundation(window, x, y, width, height):
-    foundation_color = 'peru'
-    pygame.draw.rect(window, foundation_color, ((x - width // 2, y), (width, height)))
+    pygame.draw.rect(window, FOUNDATION_COLOR, ((x - width // HALF, y), (width, height)))
 
 
 def draw_walls(window, x, y, width, height):
-    walls_color = ' peachpuff'
-    pygame.draw.rect(window, walls_color, ((x - width // 2, y), (width, height)))
-    draw_house_window(window, x, y + height // 4, width // 3, height // 2)
+    pygame.draw.rect(window, WALLS_COLOR, ((x - width // HALF, y), (width, height)))
+    draw_house_window(window, x, y + height // FOURTH, width // THIRD, height // HALF)
 
 
 def draw_house_window(window, x, y, width, height):
-    window_color = 'cornflowerblue'
-    window_border_color = 'khaki4'
-    pygame.draw.rect(window, window_color, ((x - width // 2, y), (width, height)))
-    pygame.draw.rect(window, window_border_color, ((x - width // 2, y), (width, height)), 10)
-    pygame.draw.line(window, window_border_color, (x, y), (x, y + height), 3)
-    pygame.draw.line(window, window_border_color,
-                     (x - width // 2, y + height // 2), (x + width // 2, y + height // 2), 3)
+    pygame.draw.rect(window, HOUSE_WINDOW_COLOR, ((x - width // HALF, y), (width, height)))
+    pygame.draw.rect(window, WINDOW_BORDER_COLOR, ((x - width // HALF, y), (width, height)),
+                     WINDOW_BORDER_WIDTH)
+    pygame.draw.line(window, WINDOW_BORDER_COLOR, (x, y), (x, y + height), WINDOW_LINE_WIDTH)
+    pygame.draw.line(window, WINDOW_BORDER_COLOR,
+                     (x - width // HALF, y + height // HALF), (x + width // HALF, y + height // HALF),
+                     WINDOW_LINE_WIDTH)
 
 
 def draw_roof(window, x, y, width, height):
-    roof_color = 'sienna4'
-    pygame.draw.polygon(window, roof_color, ((x - width // 2, y), (x + width // 2, y), (x, y - height)))
+    pygame.draw.polygon(window, ROOF_COLOR,
+                        ((x - width // HALF, y), (x + width // HALF, y), (x, y - height)))
 
 
 if __name__ == '__main__':
